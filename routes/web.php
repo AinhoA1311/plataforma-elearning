@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CursoController;
 use App\Models\User;
+use App\Http\Controllers\Admin\MaterialController; // Añadido para MaterialController
 
 // Ruta principal (landing page o bienvenida)
 Route::get('/', function () {
@@ -29,6 +30,7 @@ Route::get('/alumno', function () {
 // Rutas del CRUD de usuarios dentro del panel de administración
 Route::middleware(['auth'])->group(function () {
     Route::resource('admin/usuarios', UserController::class)->names('admin.usuarios');
+    Route::resource('admin/materiales', MaterialController::class)->names('admin.materiales'); // Añadido MaterialController
 });
 
 // Rutas del CRUD de cursos dentro del panel de administración
@@ -38,5 +40,6 @@ Route::middleware(['auth'])->group(function () {
 
 // Rutas de autenticación (login, registro, etc.)
 require __DIR__.'/auth.php';
+
 
 
