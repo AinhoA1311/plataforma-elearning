@@ -1,45 +1,78 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\User;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CursoController;
-use App\Models\User;
-use App\Http\Controllers\Admin\MaterialController; // Añadido para MaterialController
+use App\Http\Controllers\Admin\MaterialController;
+use App\Http\Controllers\Admin\EstadisticaController;
 
-// Ruta principal (landing page o bienvenida)
+/*
+|--------------------------------------------------------------------------
+| Rutas públicas
+|--------------------------------------------------------------------------
+*/
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-// Ruta del dashboard general, protegida por autenticación
+/*
+|--------------------------------------------------------------------------
+| Rutas protegidas con autenticación + middleware de roles
+|--------------------------------------------------------------------------
+*/
+
+// Zona ADMIN (solo usuarios con rol admin)
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin', function () {
+        return view('admin.index');
+    })->name('admin');
+
+    Route::resource('admin/usuarios', UserController::class)->names('admin.usuarios');
+    Route::resource('admin/cursos', CursoController::class)->names('admin.cursos');
+    Route::resource('admin/materiales', MaterialController::class)->names('admin.materiales');
+    Route::get('admin/estadisticas', [EstadisticaController::class, 'index'])->name('admin.estadisticas.index');
+});
+
+// Zona ALUMNO (solo usuarios con rol alumno)
+Route::middleware(['auth', 'role:alumno'])->group(function () {
+    Route::get('/alumno', function () {
+        $usuarios = User::all(); // Puedes filtrar por rol si quieres
+        return view('alumno.index', compact('usuarios'));
+    })->name('alumno');
+
+    Route::get('/alumno/materiales', function () {
+        return view('alumno.materiales.index');
+    })->name('alumno.materiales');
+
+    Route::get('/alumno/estadisticas', function () {
+        return view('alumno.estadisticas.index');
+    })->name('alumno.estadisticas');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Ruta dashboard (opcional)
+|--------------------------------------------------------------------------
+*/
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-// Ruta para la zona de administración (inicio del panel admin)
-Route::get('/admin', function () {
-    return view('admin.index');
-})->middleware(['auth'])->name('admin');
+/*
+|--------------------------------------------------------------------------
+| Rutas de autenticación
+|--------------------------------------------------------------------------
+*/
 
-// Ruta para la zona del alumno
-Route::get('/alumno', function () {
-    $usuarios = User::all(); // Opcionalmente puedes filtrar por rol si solo quieres alumnos
-    return view('alumno.index', compact('usuarios'));
-})->middleware(['auth'])->name('alumno');
-
-// Rutas del CRUD de usuarios dentro del panel de administración
-Route::middleware(['auth'])->group(function () {
-    Route::resource('admin/usuarios', UserController::class)->names('admin.usuarios');
-    Route::resource('admin/materiales', MaterialController::class)->names('admin.materiales'); // Añadido MaterialController
-});
-
-// Rutas del CRUD de cursos dentro del panel de administración
-Route::middleware(['auth'])->group(function () {
-    Route::resource('admin/cursos', CursoController::class)->names('admin.cursos');
-});
-
-// Rutas de autenticación (login, registro, etc.)
 require __DIR__.'/auth.php';
+
+
+
+
+
 
 
 

@@ -21,10 +21,9 @@
             Materiales
        </a>
 
-
-
-        <a href="#" class="bg-purple-100 p-6 rounded shadow text-center cursor-not-allowed">
-            Estadísticas (en desarrollo)
+        <a href="{{ route('admin.estadisticas.index') }}" class="bg-purple-100 p-6 rounded shadow text-center hover:bg-purple-200 transition">
+            Estadísticas
         </a>
+
     </div>
 @endsection
