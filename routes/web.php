@@ -6,24 +6,29 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CursoController;
 use App\Http\Controllers\Admin\MaterialController;
 use App\Http\Controllers\Admin\EstadisticaController;
+use App\Http\Controllers\Alumno\MisCursosController;
 
 /*
 |--------------------------------------------------------------------------
-| Rutas públicas
+| Rutas Públicas
 |--------------------------------------------------------------------------
 */
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
+
+Route::view('/catalogo', 'catalogo')->name('catalogo');
+Route::view('/info', 'info')->name('info');
+Route::view('/sobre', 'sobre')->name('sobre');
 
 /*
 |--------------------------------------------------------------------------
-| Rutas protegidas con autenticación + middleware de roles
+| Rutas Protegidas (requieren login y rol)
 |--------------------------------------------------------------------------
 */
 
-// Zona ADMIN (solo usuarios con rol admin)
+// Rutas para ADMIN
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin', function () {
         return view('admin.index');
@@ -35,7 +40,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('admin/estadisticas', [EstadisticaController::class, 'index'])->name('admin.estadisticas.index');
 });
 
-// Zona ALUMNO (solo usuarios con rol alumno)
+// Rutas para ALUMNO
 Route::middleware(['auth', 'role:alumno'])->group(function () {
     Route::get('/alumno', function () {
         $usuarios = User::all(); // Puedes filtrar por rol si quieres
@@ -49,11 +54,17 @@ Route::middleware(['auth', 'role:alumno'])->group(function () {
     Route::get('/alumno/estadisticas', function () {
         return view('alumno.estadisticas.index');
     })->name('alumno.estadisticas');
+
+    Route::get('/alumno/foro', function () {
+        return view('alumno.foro.index'); 
+    })->name('alumno.foro');
+
+    Route::get('/alumno/cursos', [MisCursosController::class, 'index'])->name('alumno.cursos');
 });
 
 /*
 |--------------------------------------------------------------------------
-| Ruta dashboard (opcional)
+| Ruta de Dashboard (opcional)
 |--------------------------------------------------------------------------
 */
 
@@ -63,11 +74,13 @@ Route::get('/dashboard', function () {
 
 /*
 |--------------------------------------------------------------------------
-| Rutas de autenticación
+| Rutas de Autenticación
 |--------------------------------------------------------------------------
 */
 
 require __DIR__.'/auth.php';
+
+
 
 
 

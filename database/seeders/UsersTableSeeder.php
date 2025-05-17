@@ -16,23 +16,30 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
-            'name' => 'Admin',
-            'email' => 'admin@admin.com',
-            'email_verified_at' => now(),
-            'password' => Hash::make('admin123'),
-            'remember_token' => Str::random(10),
-            'role' => 'admin'
-        ]);
+        // Crear usuario administrador si no existe
+        if (!User::where('email', 'admin@admin.com')->exists()) {
+            User::create([
+                'name' => 'Admin',
+                'email' => 'admin@admin.com',
+                'email_verified_at' => now(),
+                'password' => Hash::make('admin123'),
+                'remember_token' => Str::random(10),
+                'role' => 'admin',
+            ]);
+        }
 
-        User::create([
-            'name' => 'Ainhoa',
-            'email' => 'ainhoa@gmail.com',
-            'email_verified_at' => now(),
-            'password' => Hash::make('ainhoa123'),
-            'remember_token' => Str::random(10),
-            'role' => 'alumno'
-        ]);
+        // Crear usuario alumno si no existe
+        if (!User::where('email', 'ainhoa@gmail.com')->exists()) {
+            User::create([
+                'name' => 'Ainhoa',
+                'email' => 'ainhoa@gmail.com',
+                'email_verified_at' => now(),
+                'password' => Hash::make('ainhoa123'),
+                'remember_token' => Str::random(10),
+                'role' => 'alumno',
+            ]);
+        }
     }
 }
+
 

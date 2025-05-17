@@ -4,77 +4,72 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Material;
+use App\Models\Curso;
 
 class MaterialController extends Controller
 {
     public function index()
     {
-        return view('admin.materiales.index');
+        $materiales = Material::with('curso')->get(); // ✅ Trae materiales con curso
+        return view('admin.materiales.index', compact('materiales'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        $cursos = Curso::all();
+        return view('admin.materiales.create', compact('cursos'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'titulo' => 'required|string|max:255',
+            'archivo' => 'nullable|string|max:255',
+            'curso_id' => 'required|integer|exists:cursos,id',
+        ]);
+
+        Material::create($request->all());
+
+        return redirect()->route('admin.materiales.index')->with('success', 'Material creado correctamente.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+        $material = Material::with('curso')->findOrFail($id);
+        return view('admin.materiales.show', compact('material'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
+        $material = Material::findOrFail($id);
+        $cursos = Curso::all();
+        return view('admin.materiales.edit', compact('material', 'cursos'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
+        $material = Material::findOrFail($id);
+
+        $request->validate([
+            'titulo' => 'required|string|max:255',
+            'archivo' => 'nullable|string|max:255',
+            'curso_id' => 'required|integer|exists:cursos,id',
+        ]);
+
+        $material->update($request->all());
+
+        return redirect()->route('admin.materiales.index')->with('success', 'Material actualizado correctamente.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        //
+        $material = Material::findOrFail($id);
+        $material->delete();
+
+        return redirect()->route('admin.materiales.index')->with('success', 'Material eliminado correctamente.');
     }
 }
+
+
+

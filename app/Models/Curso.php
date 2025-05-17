@@ -14,4 +14,11 @@ class Curso extends Model
         'descripcion',
         'nivel',
     ];
+
+    // ✅ Relación: un curso tiene muchos materiales
+    public function materiales()
+    {
+        return $this->hasMany(\App\Models\Material::class);
+    }
 }
+

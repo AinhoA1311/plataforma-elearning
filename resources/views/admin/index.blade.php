@@ -3,27 +3,30 @@
 @section('title', 'Panel de Administración')
 
 @section('content')
-    <div class="text-center mb-10">
-        <h2 class="text-2xl font-bold">Panel de Administración</h2>
-        <p class="text-gray-600">Bienvenido, Admin. Desde aquí puedes gestionar el sistema.</p>
+<div class="container text-center">
+    <h1 class="text-green">Panel de Administración</h1>
+    <p>Gestiona cursos, usuarios, materiales y estadísticas desde aquí.</p>
+
+    <div class="grid">
+        <a href="{{ route('admin.cursos.index') }}" class="card">
+            <h2>Gestión de Cursos</h2>
+            <p>Crea, edita y organiza los cursos fácilmente.</p>
+        </a>
+        <a href="{{ route('admin.usuarios.index') }}" class="card">
+            <h2>Usuarios</h2>
+            <p>Administra alumnos y profesores.</p>
+        </a>
+        <a href="{{ route('admin.materiales.index') }}" class="card">
+            <h2>Materiales</h2>
+            <p>Comparte contenido educativo para los cursos.</p>
+        </a>
+        <a href="{{ route('admin.estadisticas.index') }}" class="card">
+            <h2>Estadísticas</h2>
+            <p>Consulta datos sobre el rendimiento de los alumnos.</p>
+        </a>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <a href="{{ route('admin.usuarios.index') }}" class="bg-blue-100 p-6 rounded shadow text-center hover:bg-blue-200 transition">
-            Usuarios
-        </a>
-
-        <a href="{{ route('admin.cursos.index') }}" class="bg-green-100 p-6 rounded shadow text-center hover:bg-green-200 transition">
-            Cursos
-        </a>
-
-       <a href="{{ route('admin.materiales.index') }}" class="block p-6 rounded-lg shadow bg-yellow-100 text-center hover:bg-yellow-200 transition">
-            Materiales
-       </a>
-
-        <a href="{{ route('admin.estadisticas.index') }}" class="bg-purple-100 p-6 rounded shadow text-center hover:bg-purple-200 transition">
-            Estadísticas
-        </a>
-
-    </div>
+    <a href="{{ url('/') }}" class="btn">← Volver al inicio</a>
+</div>
 @endsection
+

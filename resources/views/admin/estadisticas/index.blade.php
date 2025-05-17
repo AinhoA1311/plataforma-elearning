@@ -1,31 +1,35 @@
 @extends('layouts.app')
 
-@section('title', 'Estadísticas del Alumno')
+@section('title', 'Estadísticas Generales')
 
 @section('content')
-<div class="max-w-4xl mx-auto bg-white p-6 rounded shadow">
-    <h1 class="text-2xl font-bold mb-6 text-center">Tus Estadísticas</h1>
+<div class="container text-center">
+    <h1 class="text-green text-3xl font-bold mb-4">📊 Estadísticas Generales</h1>
+    <p class="text-green-300 mb-6">Consulta los datos clave de la plataforma.</p>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-center">
-        <div class="bg-purple-100 p-6 rounded shadow">
-            <h2 class="text-lg font-semibold mb-2">Cursos Activos</h2>
-            <p class="text-3xl font-bold text-purple-800">3</p>
+    <div class="grid">
+        <div class="card">
+            <h2 class="text-green-300 text-xl font-semibold mb-2">Total de Usuarios</h2>
+            <p class="text-green-100 text-lg">{{ $totalUsuarios }}</p>
         </div>
+        <div class="card">
+            <h2 class="text-green-300 text-xl font-semibold mb-2">Total de Cursos</h2>
+            <p class="text-green-100 text-lg">{{ $totalCursos }}</p>
+        </div>
+        <div class="card">
+            <h2 class="text-green-300 text-xl font-semibold mb-2">Total de Materiales</h2>
+            <p class="text-green-100 text-lg">{{ $totalMateriales }}</p>
+        </div>
+        <div class="card">
+            <h2 class="text-green-300 text-xl font-semibold mb-2">Media de Cursos por Usuario</h2>
+            <p class="text-green-100 text-lg">{{ number_format($mediaCursosPorUsuario, 2) }}</p>
+        </div>
+    </div>
 
-        <div class="bg-blue-100 p-6 rounded shadow">
-            <h2 class="text-lg font-semibold mb-2">Materiales Descargados</h2>
-            <p class="text-3xl font-bold text-blue-800">12</p>
-        </div>
-
-        <div class="bg-green-100 p-6 rounded shadow">
-            <h2 class="text-lg font-semibold mb-2">Progreso General</h2>
-            <p class="text-3xl font-bold text-green-800">75%</p>
-        </div>
-
-        <div class="bg-yellow-100 p-6 rounded shadow">
-            <h2 class="text-lg font-semibold mb-2">Foros Participados</h2>
-            <p class="text-3xl font-bold text-yellow-800">2</p>
-        </div>
+    <div class="mt-6">
+        <a href="{{ route('admin') }}" class="btn">← Volver al panel</a>
     </div>
 </div>
 @endsection
+
+
