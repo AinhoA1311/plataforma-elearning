@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: plataforma-elearning
+    runtime: docker
+    repo: https://github.com/AinhoA1311/plataforma-elearning
+    branch: main
+    plan: free
+    autoDeploy: true
+    buildCommand: ""
+    startCommand: ""
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_KEY
+        generateValue: true
+      - key: DB_CONNECTION
+        value: sqlite
+      - key: DB_DATABASE
+        value: database/database.sqlite
