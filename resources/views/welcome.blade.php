@@ -30,7 +30,28 @@
         </div>
     </div>
 </div>
+
+{{-- Aviso de Cookies --}}
+<div id="cookie-banner" style="position: fixed; bottom: 0; left: 0; right: 0; background: #000; color: #0f0; padding: 15px; text-align: center; font-family: monospace; z-index: 9999; border-top: 2px solid #0f0;">
+    Este sitio utiliza cookies para mejorar tu experiencia. 
+    <button onclick="aceptarCookies()" style="margin-left: 10px; padding: 5px 10px; background: #0f0; color: #000; font-weight: bold; border: none; cursor: pointer;">Aceptar</button>
+</div>
+
+<script>
+    function aceptarCookies() {
+        document.getElementById('cookie-banner').style.display = 'none';
+        localStorage.setItem('cookies-aceptadas', 'true');
+    }
+
+    // Oculta el banner si ya se aceptaron
+    if (localStorage.getItem('cookies-aceptadas') === 'true') {
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('cookie-banner').style.display = 'none';
+        });
+    }
+</script>
 @endsection
+
 
 
 
