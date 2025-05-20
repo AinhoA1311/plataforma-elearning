@@ -64,5 +64,21 @@
     <div class="login-container">
         <img src="{{ asset('images/logo.png') }}" alt="Logo" class="logo">
         <h1>Accede a tu cuenta</h1>
+        @if (session('status'))
+            <div style="margin-bottom: 20px; color: lime;">
+                {{ session('status') }}
+            </div>
+        @endif
+        <form method="POST" action="{{ route('login') }}">
+            @csrf
+            <input type="email" name="email" placeholder="Correo electrónico" required autofocus>
+            <input type="password" name="password" placeholder="Contraseña" required>
+            <button type="submit">Iniciar sesión</button>
+        </form>
+        <a href="{{ route('password.request') }}">¿Olvidaste tu contraseña?</a>
+    </div>
+</body>
+</html>
+
 
 
