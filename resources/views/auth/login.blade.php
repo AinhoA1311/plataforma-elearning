@@ -2,69 +2,67 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Iniciar sesión - Plataforma E-learning</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <title>Iniciar sesión - Plataforma E-learning</title>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Share Tech Mono', monospace;
+            background-color: #000;
+            color: #0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .login-container {
+            background-color: rgba(0, 255, 0, 0.05);
+            border: 1px solid #0f0;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #0f0;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        img.logo {
+            width: 100px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #0f0;
+            background: #000;
+            color: #0f0;
+        }
+        button {
+            background-color: #0f0;
+            color: #000;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+        }
+        a {
+            color: #0f0;
+            text-decoration: underline;
+            display: block;
+            margin-top: 15px;
+        }
+    </style>
 </head>
-<body class="bg-black text-green-400 font-mono">
+<body>
+    <div class="login-container">
+        <img src="{{ asset('images/logo.png') }}" alt="Logo" class="logo">
+        <h1>Accede a tu cuenta</h1>
 
-    <div class="min-h-screen flex flex-col items-center justify-center px-4">
-        <div class="w-full max-w-md bg-gray-900 border border-green-500 rounded-lg shadow-lg p-8">
-            <h1 class="text-3xl font-bold text-center mb-6">Acceso a la Plataforma</h1>
-
-            @if (session('status'))
-                <div class="mb-4 text-sm text-green-300">
-                    {{ session('status') }}
-                </div>
-            @endif
-
-            @if ($errors->any())
-                <div class="mb-4 text-red-400 text-sm">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>• {{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-
-            <form method="POST" action="{{ route('login') }}">
-                @csrf
-
-                <div class="mb-4">
-                    <label for="email" class="block text-sm font-semibold mb-1">Correo electrónico</label>
-                    <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus
-                        class="w-full px-3 py-2 bg-black border border-green-500 rounded focus:outline-none focus:ring focus:ring-green-600 text-white">
-                </div>
-
-                <div class="mb-4">
-                    <label for="password" class="block text-sm font-semibold mb-1">Contraseña</label>
-                    <input id="password" type="password" name="password" required
-                        class="w-full px-3 py-2 bg-black border border-green-500 rounded focus:outline-none focus:ring focus:ring-green-600 text-white">
-                </div>
-
-                <div class="flex items-center mb-4">
-                    <input type="checkbox" name="remember" id="remember"
-                        class="mr-2 text-green-500 bg-black border border-green-500 focus:ring-green-600">
-                    <label for="remember" class="text-sm">Recuérdame</label>
-                </div>
-
-                <div class="flex items-center justify-between">
-                    @if (Route::has('password.request'))
-                        <a href="{{ route('password.request') }}" class="text-sm text-green-300 hover:underline">
-                            ¿Olvidaste tu contraseña?
-                        </a>
-                    @endif
-                </div>
-
-                <button type="submit"
-                    class="mt-6 w-full bg-green-600 hover:bg-green-700 text-black font-bold py-2 px-4 rounded transition duration-300">
-                    Iniciar sesión
-                </button>
-            </form>
-        </div>
-    </div>
-
-</body>
-</html>
 
