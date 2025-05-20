@@ -1,31 +1,36 @@
 FROM php:8.1-fpm
 
-# Instala dependencias del sistema
+# Instalar dependencias del sistema
 RUN apt-get update && apt-get install -y \
-    git \
-    curl \
-    zip \
-    unzip \
+    build-essential \
     libpng-dev \
+    libjpeg62-turbo-dev \
+    libfreetype6-dev \
+    locales \
+    zip \
+    jpegoptim optipng pngquant gifsicle \
+    vim unzip git curl libsqlite3-dev \
     libonig-dev \
     libxml2-dev \
-    libzip-dev \
-    && docker-php-ext-install pdo_mysql mbstring zip exif pcntl
+    sqlite3
 
-# Instala Composer
+# Instalar extensiones de PHP
+RUN docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd pdo_sqlite
+
+# Instalar Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Establece el directorio de trabajo
-WORKDIR /var/www
-
-# Copia el contenido de tu aplicación
+# Copiar el código al contenedor
+WORKDIR /var/www/html
 COPY . .
 
-# Instala las dependencias de Laravel
-RUN composer install --optimize-autoloader --no-dev
+# Instalar dependencias PHP
+RUN composer install --no-dev --optimize-autoloader
 
-# Permisos para Laravel
-RUN chown -R www-data:www-data /var/www \
-    && chmod -R 755 /var/www/storage
+# Permisos
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 755 /var/www/html/storage
 
-CMD php artisan serve --host=0.0.0.0 --port=10000
+EXPOSE 8000
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+
