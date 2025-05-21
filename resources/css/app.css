@@ -1,8 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
-
 
 @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
@@ -15,3 +13,17 @@ body {
 h1, h2, h3, p {
     text-shadow: 0 0 5px #00ff00;
 }
+
+.card {
+    border: 1px solid #00ff99;
+    border-radius: 10px;
+    padding: 1.5rem;
+    background-color: #1a1a1a;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 10px #00ff99;
+}
+

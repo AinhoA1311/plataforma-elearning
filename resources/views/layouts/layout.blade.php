@@ -3,101 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plataforma E-learning</title>
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    <title>@yield('title', 'Plataforma E-learning')</title>
 
-        body {
-            background-color: #0d0d0d;
-            color: #00ff99;
-            font-family: 'Share Tech Mono', monospace;
-        }
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         header {
             background-color: #121212;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             border-bottom: 2px solid #00ff99;
+            padding: 1rem;
         }
 
-        header .logo {
+        .header-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        @media(min-width: 768px) {
+            .header-container {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+
+        .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 1.4rem;
             font-weight: bold;
             color: #00ff99;
+            font-size: 1.2rem;
         }
 
-        header img {
-            height: 30px;
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+            width: auto;
         }
 
-        nav a {
-            color: #f0f0f0;
-            margin-left: 1rem;
+        nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        @media(min-width: 768px) {
+            nav {
+                flex-direction: row;
+                gap: 1.5rem;
+            }
+        }
+
+        nav a, nav button {
+            color: #ccc;
             text-decoration: none;
+            background: none;
+            border: none;
+            font: inherit;
+            cursor: pointer;
+            transition: color 0.3s;
         }
 
-        nav a:hover {
+        nav a:hover, nav button:hover {
             color: #00ff99;
-        }
-
-        main {
-            padding: 2rem;
         }
 
         footer {
             background-color: #121212;
-            color: #888;
-            padding: 2rem;
+            padding: 2rem 1rem;
+            color: #999;
             text-align: center;
+            font-size: 0.9rem;
             border-top: 1px solid #00ff99;
         }
 
-        .card {
-            background-color: #1a1a1a;
-            border: 1px solid #00ff99;
-            border-radius: 10px;
-            padding: 2rem;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 0 10px #00ff99;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        a.button {
-            display: inline-block;
-            background-color: #00ff99;
-            color: #000;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            margin-top: 2rem;
+        footer a {
+            color: #00ff99;
+            margin: 0 10px;
             text-decoration: none;
-            font-weight: bold;
         }
 
-        a.button:hover {
-            background-color: #00cc77;
+        footer a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
+
 <body>
     <header>
         <div class="logo">

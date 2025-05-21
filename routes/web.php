@@ -7,13 +7,9 @@ use App\Http\Controllers\Admin\CursoController;
 use App\Http\Controllers\Admin\MaterialController;
 use App\Http\Controllers\Admin\EstadisticaController;
 use App\Http\Controllers\Alumno\MisCursosController;
+use App\Http\Controllers\Alumno\ForoController;
 
-/*
-|--------------------------------------------------------------------------
-| Rutas Públicas
-|--------------------------------------------------------------------------
-*/
-
+// Rutas públicas
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
@@ -22,13 +18,7 @@ Route::view('/catalogo', 'catalogo')->name('catalogo');
 Route::view('/info', 'info')->name('info');
 Route::view('/sobre', 'sobre')->name('sobre');
 
-/*
-|--------------------------------------------------------------------------
-| Rutas Protegidas (requieren login y rol)
-|--------------------------------------------------------------------------
-*/
-
-// Rutas para ADMIN
+// Rutas protegidas para ADMIN
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin', function () {
         return view('admin.index');
@@ -40,10 +30,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('admin/estadisticas', [EstadisticaController::class, 'index'])->name('admin.estadisticas.index');
 });
 
-// Rutas para ALUMNO
+// Rutas protegidas para ALUMNO
 Route::middleware(['auth', 'role:alumno'])->group(function () {
     Route::get('/alumno', function () {
-        $usuarios = User::all(); // Puedes filtrar por rol si quieres
+        $usuarios = User::all();
         return view('alumno.index', compact('usuarios'));
     })->name('alumno');
 
@@ -55,30 +45,20 @@ Route::middleware(['auth', 'role:alumno'])->group(function () {
         return view('alumno.estadisticas.index');
     })->name('alumno.estadisticas');
 
-    Route::get('/alumno/foro', function () {
-        return view('alumno.foro.index'); 
-    })->name('alumno.foro');
+    Route::get('/alumno/foro', [ForoController::class, 'index'])->name('alumno.foro');
+    Route::post('/alumno/foro', [ForoController::class, 'publicar'])->name('alumno.foro.publicar');
 
     Route::get('/alumno/cursos', [MisCursosController::class, 'index'])->name('alumno.cursos');
 });
 
-/*
-|--------------------------------------------------------------------------
-| Ruta de Dashboard (opcional)
-|--------------------------------------------------------------------------
-*/
-
+// Ruta de dashboard
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-/*
-|--------------------------------------------------------------------------
-| Rutas de Autenticación
-|--------------------------------------------------------------------------
-*/
-
+// Autenticación
 require __DIR__.'/auth.php';
+
 
 
 
