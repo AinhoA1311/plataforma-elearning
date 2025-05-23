@@ -3,10 +3,10 @@
 @section('title', 'Materiales del Curso')
 
 @section('content')
-<div class="container">
-    <h1 class="text-green text-3xl font-bold mb-8 text-center">📁 Materiales del Curso</h1>
+<div class="container mx-auto px-4">
+    <h1 class="text-green text-3xl font-bold mb-10 text-center">📁 Materiales del Curso</h1>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 px-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <!-- Guía de Laravel -->
         <div class="card text-center">
             <p class="font-bold text-purple-200 text-lg">📄 Guía de Laravel</p>
@@ -28,7 +28,7 @@
         <!-- SQL Básico -->
         <div class="card text-center">
             <p class="font-bold text-purple-200 text-lg">📦 SQL Básico</p>
-            <a href="{{ asset('materiales/sql-basico.zip') }}" class="underline hover:text-green-300 block mt-2">
+            <a href="{{ asset('materiales/sql-basico.zip') }}" class="underline hover:text-green-300 block mt-2" download>
                 Ejercicios de SQL – Nivel básico
             </a>
             <p class="text-sm text-green-400 mt-2">Archivo en formato ZIP</p>
@@ -44,11 +44,12 @@
         </div>
     </div>
 
-    <div class="text-center mt-10">
+    <div class="text-center mt-12">
         <a href="{{ route('alumno') }}" class="text-green-400 hover:underline">← Volver al panel del alumno</a>
     </div>
 </div>
 @endsection
+
 
 
 
