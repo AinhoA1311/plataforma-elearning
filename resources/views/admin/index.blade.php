@@ -1,32 +1,49 @@
 @extends('layouts.app')
 
-@section('title', 'Panel de Administración')
+@section('title', 'Foro del Alumno')
 
 @section('content')
 <div class="container text-center">
-    <h1 class="text-green">Panel de Administración</h1>
-    <p>Gestiona cursos, usuarios, materiales y estadísticas desde aquí.</p>
+    <h1 class="text-green">Foro de la Comunidad</h1>
+    <p>Comparte ideas, dudas y recursos con otros alumnos.</p>
 
-    <div class="grid">
-        <a href="{{ route('admin.cursos.index') }}" class="card">
-            <h2>Gestión de Cursos</h2>
-            <p>Crea, edita y organiza los cursos fácilmente.</p>
-        </a>
-        <a href="{{ route('admin.usuarios.index') }}" class="card">
-            <h2>Usuarios</h2>
-            <p>Administra alumnos y profesores.</p>
-        </a>
-        <a href="{{ route('admin.materiales.index') }}" class="card">
-            <h2>Materiales</h2>
-            <p>Comparte contenido educativo para los cursos.</p>
-        </a>
-        <a href="{{ route('admin.estadisticas.index') }}" class="card">
-            <h2>Estadísticas</h2>
-            <p>Consulta datos sobre el rendimiento de los alumnos.</p>
-        </a>
+    <div class="foro-temas mb-4">
+        <h2 class="text-xl font-semibold">Temas destacados</h2>
+
+        @foreach ($temas as $tema)
+            <div class="card mt-3 p-3">
+                <h3 class="text-lg font-bold">{{ $tema['titulo'] }}</h3>
+                <ul class="text-left pl-4 list-disc">
+                    @foreach ($tema['comentarios'] as $comentario)
+                        <li><strong>{{ $comentario['autor'] }}:</strong> {{ $comentario['texto'] }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endforeach
     </div>
 
-    <a href="{{ url('/') }}" class="btn">← Volver al inicio</a>
+    <div class="foro-comunidad mt-5">
+        <h2 class="text-xl font-semibold mb-2">Comentarios de la comunidad</h2>
+
+        @foreach ($mensajes as $msg)
+            <div class="border rounded p-2 my-2 bg-gray-900 text-white">
+                <p><strong>{{ $msg->autor }}:</strong> {{ $msg->texto }}</p>
+            </div>
+        @endforeach
+    </div>
+
+    <div class="foro-formulario mt-5">
+        <h2 class="text-xl font-semibold mb-2">Escribe tu comentario</h2>
+        <form method="POST" action="{{ route('alumno.foro.publicar') }}">
+            @csrf
+            <textarea name="mensaje" rows="4" class="w-full p-2 rounded" placeholder="Escribe aquí tu mensaje..." required></textarea>
+            <br>
+            <button type="submit" class="btn mt-2">Publicar</button>
+        </form>
+    </div>
+
+    <a href="{{ route('alumno.dashboard') }}" class="btn mt-5">← Volver al Panel</a>
 </div>
 @endsection
+
 

@@ -28,8 +28,8 @@
         <!-- SQL Básico -->
         <div class="card text-center">
             <p class="font-bold text-purple-200 text-lg">📦 SQL Básico</p>
-            <a href="{{ asset('materiales/sql-basico.zip') }}" class="underline hover:text-green-300 block mt-2" download>
-                Ejercicios de SQL – Nivel básico
+            <a href="{{ asset('materiales/sql-basico.zip') }}" download class="underline hover:text-green-300 block mt-2">
+                Ejercicios de SQL – Nivel básico (ZIP)
             </a>
             <p class="text-sm text-green-400 mt-2">Archivo en formato ZIP</p>
         </div>
@@ -38,7 +38,7 @@
         <div class="card text-center">
             <p class="font-bold text-purple-200 text-lg">📚 HTML & CSS</p>
             <a href="{{ asset('materiales/presentacion-html-css.pdf') }}" target="_blank" class="underline hover:text-green-300 block mt-2">
-                Presentación HTML y CSS
+                Presentación HTML y CSS (PDF)
             </a>
             <p class="text-sm text-green-400 mt-2">Ejemplos visuales y práctica</p>
         </div>
@@ -49,6 +49,8 @@
     </div>
 </div>
 @endsection
+
+
 
 
 

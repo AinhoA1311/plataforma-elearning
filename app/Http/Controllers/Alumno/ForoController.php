@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Alumno;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Mensaje;
 
 class ForoController extends Controller
 {
@@ -26,21 +27,19 @@ class ForoController extends Controller
             ]
         ];
 
-        $mensajes = session('mensajes', []);
+        $mensajes = Mensaje::latest()->get();
+
         return view('alumno.foro.index', compact('temas', 'mensajes'));
     }
 
     public function publicar(Request $request)
     {
-        $mensaje = $request->input('mensaje');
+        Mensaje::create([
+            'autor' => auth()->user()->name ?? 'Anónimo',
+            'texto' => $request->input('mensaje')
+        ]);
 
-        $mensajes = session('mensajes', []);
-        $mensajes[] = ['autor' => 'Tú', 'texto' => $mensaje];
-
-        session(['mensajes' => $mensajes]);
         return redirect()->route('alumno.foro');
     }
 }
-
-
 
