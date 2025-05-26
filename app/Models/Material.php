@@ -9,7 +9,7 @@ class Material extends Model
 {
     use HasFactory;
 
-    protected $table = 'materiales'; // ← ESTA ES LA CLAVE
+    protected $table = 'materiales'; //
 
     protected $fillable = [
         'titulo',

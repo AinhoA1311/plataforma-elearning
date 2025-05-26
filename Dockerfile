@@ -1,32 +1,33 @@
-# 1. Imagen base PHP 8.1 FPM
+# 1. Imagen base: PHP 8.1 con FPM
 FROM php:8.1-fpm
 
-# 2. Instalar dependencias necesarias para pgsql y otras extensiones PHP
+# 2. Instalar dependencias necesarias para PostgreSQL y Laravel
 RUN apt-get update && apt-get install -y \
     libpq-dev \
     libzip-dev \
-    zip unzip git curl vim sqlite3 libsqlite3-dev libonig-dev libxml2-dev \
-    && docker-php-ext-install pdo pdo_pgsql pdo_mysql zip mbstring exif pcntl bcmath xml
+    zip unzip git curl vim libonig-dev libxml2-dev \
+    && docker-php-ext-install pdo pdo_pgsql bcmath mbstring pcntl exif zip xml
 
-# 3. Instalar Composer (gestor de paquetes PHP)
+# 3. Instalar Composer desde imagen oficial
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# 4. Establecer directorio de trabajo dentro del contenedor
+# 4. Establecer carpeta de trabajo
 WORKDIR /var/www/html
 
-# 5. Copiar todos los archivos del proyecto al contenedor
+# 5. Copiar el contenido del proyecto al contenedor
 COPY . .
 
-# 6. Instalar dependencias PHP del proyecto sin paquetes de desarrollo y optimizando autoloaders
+# 6. Instalar dependencias PHP del proyecto optimizadas para producción
 RUN composer install --no-dev --optimize-autoloader
 
-# 7. Dar permisos correctos para que PHP (www-data) pueda escribir en storage y bootstrap/cache
+# 7. Asignar permisos para Laravel
 RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html/storage /var/www/html/bootstrap/cache
+    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# 8. Exponer el puerto 8000 para el servidor PHP integrado
+# 8. Exponer el puerto 8000 para Laravel serve
 EXPOSE 8000
 
-# 9. Comando para arrancar el servidor Laravel en producción escuchando en todas las IPs en el puerto 8000
+# 9. Arrancar Laravel en producción
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+
 
