@@ -28,7 +28,7 @@
         <!-- SQL Básico -->
         <div class="card text-center">
             <p class="font-bold text-purple-200 text-lg">📦 SQL Básico</p>
-            <a href="{{ route('alumno.materiales.descargar') }}" class="underline hover:text-green-300 block mt-2 text-green-300">
+            <a href="{{ asset('materiales/sql-basico.zip') }}" class="underline hover:text-green-300 block mt-2 text-green-300" download>
                 Descargar ejercicios SQL (ZIP)
             </a>
             <p class="text-sm text-green-400 mt-2">Archivo en formato ZIP</p>
@@ -49,17 +49,3 @@
     </div>
 </div>
 @endsection
-
-
-
-
-
-
-
-
-
-
-
-
-
-

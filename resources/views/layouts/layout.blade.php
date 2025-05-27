@@ -131,9 +131,11 @@
         <div>© {{ date('Y') }} Plataforma E-learning. Todos los derechos reservados.</div>
     </footer>
 
-    @stack('scripts') {{-- 🔧 Necesario para que se ejecuten scripts como el de descarga del ZIP --}}
+    @stack('scripts')
 </body>
 </html>
+
+
 
 
 

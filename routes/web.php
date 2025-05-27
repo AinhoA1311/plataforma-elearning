@@ -58,15 +58,3 @@ Route::get('/dashboard', function () {
 
 // AUTENTICACIÓN (Laravel Breeze, Jetstream, etc.)
 require __DIR__.'/auth.php';
-
-
-
-
-
-
-
-
-
-
-
-
