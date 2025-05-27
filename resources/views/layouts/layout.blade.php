@@ -124,15 +124,16 @@
             <strong>Contacto:</strong> contacto@plataforma-elearning.com | <strong>Tel:</strong> +34 912 345 678
         </div>
         <div style="margin: 10px 0;">
-            <a href="#" style="color: #00ff99; margin: 0 10px;">Aviso legal</a>
-            <a href="#" style="color: #00ff99; margin: 0 10px;">Política de privacidad</a>
-            <a href="#" style="color: #00ff99; margin: 0 10px;">Términos de uso</a>
+            <a href="#">Aviso legal</a>
+            <a href="#">Política de privacidad</a>
+            <a href="#">Términos de uso</a>
         </div>
         <div>© {{ date('Y') }} Plataforma E-learning. Todos los derechos reservados.</div>
     </footer>
+
+    @stack('scripts') {{-- 🔧 Necesario para que se ejecuten scripts como el de descarga del ZIP --}}
 </body>
 </html>
-
 
 
 
