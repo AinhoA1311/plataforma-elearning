@@ -33,7 +33,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 // RUTAS PROTEGIDAS PARA ALUMNO
 Route::middleware(['auth', 'role:alumno'])->group(function () {
     Route::get('/alumno', function () {
-        $usuarios = User::all(); // puedes quitar esto si no los usas en la vista
+        $usuarios = User::all();
         return view('alumno.index', compact('usuarios'));
     })->name('alumno');
 
@@ -49,6 +49,16 @@ Route::middleware(['auth', 'role:alumno'])->group(function () {
     Route::post('/alumno/foro', [ForoController::class, 'publicar'])->name('alumno.foro.publicar');
 
     Route::get('/alumno/cursos', [MisCursosController::class, 'index'])->name('alumno.cursos');
+
+    // ✅ RUTA SEGURA PARA DESCARGA ZIP
+    Route::get('/descargar-ejercicio', function () {
+        $path = public_path('materiales/sql-basico.zip');
+        if (file_exists($path)) {
+            return response()->download($path);
+        } else {
+            abort(404, 'Archivo no encontrado');
+        }
+    })->name('alumno.materiales.descargar');
 });
 
 // RUTA GENERAL PARA EL DASHBOARD
